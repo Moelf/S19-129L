@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
+import subprocess
 
-def num_even_digits(x):
-    return len([ y for y in str(x) if int(y) % 2 == 0])
+subprocess.call(["/bin/ls", "/etc"])
 
-print(num_even_digits(123456))
