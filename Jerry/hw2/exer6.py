@@ -1,4 +1,4 @@
-import math
+# import math
 # import time
 
 #this helper function returns primitivity
