@@ -2,10 +2,10 @@
 
 sent=input("Please input a sentence: ")
 
-list1=[len(x) for x in sent.split()] #Count all characters excluding only spaces
+list1=[len(x) for x in sent.split()] #Count all characters excluding only spaces; includes punctuation in 'characters'
 
 sent=sent.replace(',',' ') #separates words by commas, etc
-sent=sent.replace(';',' ') #Francesco said this was enough
+sent=sent.replace(';',' ') #Francesco said this was the punctuation that mattered; don't need to account for every possible one
 sent=sent.replace(':',' ')
 sent=sent.replace('.',' ')
 sent=sent.replace('/',' ')
