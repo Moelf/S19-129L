@@ -27,4 +27,5 @@ ani = animation.FuncAnimation(
 
 plt.xlim(-20,20)
 plt.ylim(-20,20)
+plt.title("2-D Random Walk")
 plt.show()
