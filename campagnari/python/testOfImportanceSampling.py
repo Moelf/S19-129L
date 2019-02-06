@@ -43,7 +43,7 @@ for i in range(n):
 
     # With importance sampling
     x2   = 0.5 * math.pi* np.sqrt(np.random.rand(N))
-    fx2  = np.sin(x1) / (8 * x2 / (math.pi*math.pi) )
+    fx2  = np.sin(x0) / (8 * x2 / (math.pi*math.pi) )
     int2 = (1./N) * fx2.sum()
     res2.append(int2)
 
@@ -76,9 +76,3 @@ ax.set_xlabel("Sample number")
 ax.set_ylabel("Estimate of integral")
 fig.show()
 input("Enter anything to continue and exit  ")
-
-            
-
-
-
-    
