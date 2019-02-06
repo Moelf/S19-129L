@@ -17,7 +17,7 @@ def cdf(x):
 num=[cdf(x) for x in unif]
 
 plt.hist(num,bins=val,label='Histogram')
-plt.plot(val,pdf(val), label='PDF')
+plt.plot(val,pdf(val), label='PDF', color='r')
 plt.xticks(val)
 plt.legend()
 plt.show()

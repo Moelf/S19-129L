@@ -24,6 +24,6 @@ def animate(i):
 	line,=ax.plot(x[0:i], y[0:i])
 	return line,
 	
-ani=animation.FuncAnimation(fig,animate,interval=5)
+ani=animation.FuncAnimation(fig,animate,interval=1)
 
 plt.show()

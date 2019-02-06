@@ -19,6 +19,7 @@ def toy(N):
 	print("The calculated pi value = %.5f" %pi_tilde, "is %.5f %% off" %off)
 	sigma_f_tilde=math.sqrt(f_tilde*(1-f_tilde)/N) #Uncertainty in f
 	rho=(pi_tilde-math.pi)/(4*sigma_f_tilde) #Pull calculation
+	print('The calculated pull is %.5f' %rho)
 	return rho**2
 
 chisquared=0
