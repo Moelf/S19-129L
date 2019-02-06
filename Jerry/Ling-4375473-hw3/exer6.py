@@ -25,7 +25,7 @@ def animate(i):
 ani = animation.FuncAnimation(
     fig, animate, init_func=init, interval=3, blit=True, save_count=5000)
 
-plt.xlim(-20,20)
-plt.ylim(-20,20)
+plt.xlim(-25,25)
+plt.ylim(-25,25)
 plt.title("2-D Random Walk")
 plt.show()

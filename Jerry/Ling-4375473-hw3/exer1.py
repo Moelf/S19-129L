@@ -11,10 +11,11 @@ def MC1(N):
     print("n = %d" % n)
     our_f = n/N
     ourPi = 4.0 * our_f
-    print("ourPi = %.4f" % ourPi, "is %.4f %% away.\n" % abs( 100*(ourPi - math.pi)/math.pi))
+    print("ourPi = %.4f" % ourPi, "is %.4f %% away." % abs( 100*(ourPi - math.pi)/math.pi))
     sigma_f = math.sqrt(our_f*(1-our_f)/N)
     sigma_pi = 4*sigma_f
     rho = (ourPi - math.pi)/sigma_pi
+    print("pull rho = %.4f \n" % rho)
     return rho**2
 
 ChiSqu = 0
