@@ -21,7 +21,7 @@ parser.add_argument('-L', '--Low', help='Minimum for plot', required=False, type
 parser.add_argument('-H', '--High', help='Maximum for plot', required=False, type=int)
 parser.add_argument('-s', '--seed', help='Random seed. Default=10', required=False, type=int, default=1)
 parser.add_argument('-o', '--obs',  help='Number of observed events', required=True, type=int)
-parser.add_argument('-u', '--uncertainty', help='Uncertainty in background', required=False, type=float)
+parser.add_argument('-u', '--uncertainty', help='Uncertainty in background', required=False, type=float, default=0.0)
 parser.add_argument('-g', '--gaussian', help='Use Gaussian instead of LogNormal', required=False, action='store_true')
 
 

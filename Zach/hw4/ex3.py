@@ -12,6 +12,6 @@ z=np.random.uniform(low=0.0,high=45.0,size=N)
 def f(x,y):
 	return( (x+2.0*y)*(x+y) )
 
-integral=np.sum(z<f(x,y)*2.0*45.0/N)
+integral=np.sum(z<f(x,y))/N*2.0*45.0
 
 print("The calculated value is", integral)
