@@ -15,7 +15,8 @@
 # Repeat the procedure n times and
 # each time pick N random numbers
 #
-# CC 3-Feb2019
+# CC 3-Feb 2019
+#    6-Feb 2019 Fixed typo, thank you Jerry
 #-----------------------------------
 import math
 import numpy as np
@@ -43,7 +44,7 @@ for i in range(n):
 
     # With importance sampling
     x2   = 0.5 * math.pi* np.sqrt(np.random.rand(N))
-    fx2  = np.sin(x0) / (8 * x2 / (math.pi*math.pi) )
+    fx2  = np.sin(x2) / (8 * x2 / (math.pi*math.pi) )
     int2 = (1./N) * fx2.sum()
     res2.append(int2)
 
@@ -71,8 +72,14 @@ ax.plot(np.linspace(1,len(res2), len(res2)), res2, marker='x',
             label="with importance sampling", color='red', linestyle='none')
 ax.plot([1, len(res1)],  [1, 1], color='black')
 ax.legend(loc='best')
-ax.set_ylim(0.2, 2)
+ax.set_ylim(0.4, 1.6)
 ax.set_xlabel("Sample number")
 ax.set_ylabel("Estimate of integral")
 fig.show()
 input("Enter anything to continue and exit  ")
+
+            
+
+
+
+    

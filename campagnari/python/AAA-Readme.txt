@@ -11,6 +11,9 @@ ccHistStuff.py
    Utilities for histogram plotting.  At the moment implemented
    a stat box and putting error bars on a histogram.
 
+colorPicture.py
+  An example of making an 8 bit color pixel map
+
 compareLogNormal.py
    A comparison of a Gaussian and a "massaged" Lognormal
    which looks very much like a Lognormal distribution
@@ -66,3 +69,6 @@ testOfImportanceSampling.py
 
 testFile.txt
   A random text file used by demoReadFile.py
+
+testOfScope.py
+  A short program to test the "scope" of variables
