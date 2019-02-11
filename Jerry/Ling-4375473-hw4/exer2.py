@@ -2,7 +2,7 @@
 #
 # Generate and plot Poisson numbers
 # 
-# CC 29 Jan 2019
+# Based on CC 29 Jan 2019
 #     5 Feb 2019  also return pvalue
 #----------------------------------------
 import argparse
