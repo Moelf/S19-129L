@@ -27,11 +27,20 @@ for ix in range(xpix):
 		y=(iy-yc)/200
 		n=0.0
 		n_max=255.0
-		while x**2+y**2<2 and n<n_max:
-			tempe=x**2-y**2
-			ix=tempe+a
-			iy=2*x*y+b
-			n=n+1.0
-		print(n)
+		z=complex(x,y)
+		while np.abs(z)<2 and n<n_max:
+			z=f(z)
+			n+=1
+		#print(n)
+		temp[ix,iy]=n
 			
-#print(temp)
+color=np.flipud(temp.transpose() )
+
+f1, ax1=plt.subplots()
+picture=ax1.imshow(color,interpolation='none',cmap='jet')
+ax1.axis("off")
+plt.title("Julia plot")
+f1.show()
+
+input("Press any button to exit")
+
