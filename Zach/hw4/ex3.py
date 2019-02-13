@@ -5,6 +5,8 @@ import numpy as np
 N=100000
 np.random.seed(12345)
 
+#Simple monte carlo integral using uniform random values
+
 x=np.random.uniform(low=0.0,high=1.0,size=N)
 y=np.random.uniform(low=2.0,high=4.0,size=N)
 z=np.random.uniform(low=0.0,high=45.0,size=N)
