@@ -17,16 +17,21 @@ c=complex(a,b)
 def f(z):
 	return z**2+c
 
+pixColor=np.zeros( (xpix,ypix), dtype='uint8')
+
 temp=np.zeros((xpix,ypix))
+
 for ix in range(xpix):
+	x=(ix-xc)/200
 	for iy in range(ypix):
+		y=(iy-yc)/200
 		n=0.0
 		n_max=255.0
-		while ix**2+iy**2<2 and n<n_max:
-			tempe=ix**2-iy**2
+		while x**2+y**2<2 and n<n_max:
+			tempe=x**2-y**2
 			ix=tempe+a
-			iy=iy=2*ix*iy+b
+			iy=2*x*y+b
 			n=n+1.0
-		temp[int(ix),int(iy)]=n
+		print(n)
 			
-print(temp)
+#print(temp)

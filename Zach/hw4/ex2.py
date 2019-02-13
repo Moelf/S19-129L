@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-#
-# Generate and plot Poisson numbers
-# 
-# CC 29 Jan 2019
-#     5 Feb 2019  also return pvalue
-#----------------------------------------
+
+#Using Claudio's script, adding relevant bits to it
+
+
 import argparse
 import sys
 import math
@@ -14,6 +12,7 @@ import scipy.stats as stats
 import ccHistStuff as cc
 
 # Define the arguments
+#Include uncertainty and gaussian boolean argument
 parser =  argparse.ArgumentParser(description="Generate and plot Poisson variable. Calculate pvalue of observed")
 parser.add_argument('-m','--mean', help='Mean of the Poisson', required=True, type=float)
 parser.add_argument('-n', '--nev', help='No. to generate. Default=10K', required=False, type=int, default=10000)
