@@ -28,8 +28,10 @@ ys = [[integrand(x) for x in xs] for _ in range(0, 100)]
 
 # plot all y values overlapping
 for y in ys:
-    plt.scatter(xs, y,  s=0.5, marker='.', alpha=0.5)
+    plt.scatter(xs, y,  s=0.8, marker='.', alpha=0.8)
 plt.title("100 MC integrali bands")
 plt.xlabel("x")
 plt.ylabel("$f(x)$")
+plt.xlim(-4, 15)
+plt.ylim(-3, 23)
 plt.show()

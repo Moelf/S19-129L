@@ -17,13 +17,13 @@ area = (x_f - x_i) * (y_f - y_i)
 # number of MC trials
 N = 100*1000
 
+# generate lists for rejection method
 x = np.random.uniform(x_i, x_f, N)
 y = np.random.uniform(y_i, y_f, N)
 z = np.random.uniform(0, scale, N)
 
-
+# fully vectorized, speedy!
 # integral = Volume * Number of points in / Total points
 integral = np.sum(z < f(x, y)) / N * area * scale
-
 
 print("Using %d MC points, we find the integral is: %f" % (N, integral))
