@@ -23,7 +23,7 @@ parser.add_argument('-s', '--seed', help='Random seed. Default=10', required=Fal
 parser.add_argument('-o', '--obs',  help='Number of observed events', required=True, type=int)
 parser.add_argument('-u', '--uncertainty',  help='Set uncertainty in bkg', required=False, type=float, default=1)
 parser.add_argument('-g', '--gaussian',  help='Use truncated gaussian instead of LogNorm', required=False,
-                    action='store_true')
+                    action='store_true') # this is a bool type, basically action= overrides putting value
 
 # This is a dictionary containing the arguments
 args = vars(parser.parse_args())
@@ -34,7 +34,7 @@ nev    = args['nev']   # number of events to generate
 seed   = args['seed']
 obs    = args['obs']
 uncert = args['uncertainty']
-gauss  = args['gaussian']
+gauss  = args['gaussian'] # get the store turth or False by defualt
 nsigma = 5.             # plot to \pm 5 sigma if not specified 
 if args['Low'] == None:
     nMin = int(max(0., mean-nsigma*math.sqrt(mean)))

@@ -49,7 +49,6 @@ for _ in range(0, N):
     MC_chain.append([x, y])  # add x1 or x2 depends on validation result
 
 MC_chain = np.array(MC_chain[int(burn_in*len(MC_chain)):])  # burn-in 10%
-print(MC_chain[:, 1])
 N = len(MC_chain)
 
 # because p(x,y) and area info are encoded in the Markov chain
