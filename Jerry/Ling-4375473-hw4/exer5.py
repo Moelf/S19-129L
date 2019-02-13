@@ -32,7 +32,7 @@ for y in ys:
     plt.scatter(xs, y,  marker='.')
 plt.title("100 MC integral bands")
 plt.xlabel("x")
-plt.ylabel("$f(x)$")
+plt.ylabel("$f(x) = \int_0^{\infty} exp(-x-y)\cdot (x+y)^N$")
 plt.xlim(-4, 15)
 plt.ylim(-3, 23)
 plt.show()
