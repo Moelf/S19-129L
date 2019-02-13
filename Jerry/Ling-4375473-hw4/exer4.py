@@ -1,13 +1,17 @@
 import numpy as np
 
 # function we're interested in, return 0 if MC walks out of range
+
+
 def p(x, y):
     if (x_i <= x <= x_f) and (y_i <= y <= y_f):
         return (x+y)/7
     else:
         return 0.0
 
+
 def g(x, y): return 7*(x+2*y)
+
 
 def proposal_accept(x1, y1, x2, y2):
     """
@@ -42,13 +46,14 @@ for _ in range(0, N):
         x, y = x_prime, y_prime
     else:
         pass
-    MC_chain.append([x, y]) # add x1 or x2 depends on validation result
+    MC_chain.append([x, y])  # add x1 or x2 depends on validation result
 
-MC_chain = MC_chain[int(burn_in*len(MC_chain)):] #burn-in 10%
+MC_chain = np.array(MC_chain[int(burn_in*len(MC_chain)):])  # burn-in 10%
+print(MC_chain[:, 1])
 N = len(MC_chain)
 
 # because p(x,y) and area info are encoded in the Markov chain
 # we simply plug into g(x,y) and take average to get integral
-integral = np.sum([g(i[0], i[1]) for i in MC_chain]) / N
+integral = np.sum(g(MC_chain[:, 0], MC_chain[:, 1])) / N  # vectorize faster
 print("Using %d Markov Chain points after burn-in, \
 we find the integral is: %.3f" % (N, integral))
