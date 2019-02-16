@@ -23,6 +23,7 @@ pixColor = np.zeros((xpix, ypix), dtype='uint8')
 
 temp = np.zeros((xpix, ypix))
 
+#Run through each pixel and assign a color
 for ix in range(xpix):
     x = (ix-xc)/200
     for iy in range(ypix):

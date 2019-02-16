@@ -57,7 +57,7 @@ np.random.seed(seed)
 
 if gauss:
 	means=np.random.normal(mean,uncert,nev)
-	means=[means>0]
+	means=means[means>0]
 else:
 	means=np.random.lognormal(math.log(mean),math.log(1+uncert/mean),nev)
 
