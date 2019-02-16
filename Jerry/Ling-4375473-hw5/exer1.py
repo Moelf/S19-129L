@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 # T0 cancels in the end so might as well just ignore
 def T_intgrand(alpha, beta):
     k = np.sin(alpha)/2
