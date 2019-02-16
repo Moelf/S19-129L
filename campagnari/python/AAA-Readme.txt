@@ -61,6 +61,9 @@ muonSim.py
    in class on Feb 4.  Slides with the discussion can be found on
    the class website
 
+myTriangle.py
+   An example of a class that implements a "triangle" object in 2D
+
 plotGaussian.py
    Plots of gaussian, error function, one sided p-value to N(sigma)
 
