@@ -50,6 +50,11 @@ genExponential.py
 genPoisson.py
    Example of generating and plotting a Poisson distribution
 
+LVector_specifications.py
+   Exercise 1, Homework 6, asks for writing a Lorentz Vector class.
+   This python file specifies the methods that are required (including
+   their names)
+
 markovChain.py
    Example of how to generate random numbers using a Markov Chain.
    In this case we have a hardwired Gaussian as our target pdf
@@ -66,6 +71,28 @@ myTriangle.py
 
 plotGaussian.py
    Plots of gaussian, error function, one sided p-value to N(sigma)
+
+straightTracks.txt
+   A text file needed for Exercises 1 and 3 in Homework 7
+
+simpleFit_v1.py 
+   Example code to do a chisq fit using matrix algebra. 
+   Fit 6 points to  a+b*x^2
+
+simpleFit_v2.py 
+   Same as simpleFit_v1, still 6 points, but now the fitting function
+   is a/(1+b*x)
+
+testFit_v1.py
+   A test/demo on how to fit a polynomial with np.polyfit
+
+testFit_v2.py
+   A test/demo to do the same thing as testFit_V1 but using
+   scipy.optimize.curve_fit
+
+testFit_v3.py
+   A test/demo to do the same thing as testFit_V1 and testFit_V2
+   but using Minuit/iminuit
 
 testOfImportanceSampling.py
    An example of MC integration with and without importance sampling

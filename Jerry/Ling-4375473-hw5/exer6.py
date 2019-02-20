@@ -7,7 +7,7 @@ tau, h = 0.0, 0.0
 try:
     tau = float(input("Set time-constant tau: "))
     # set time step
-    h = tau/100
+    h = tau/500
 except ValueError:
     print("Bad input, try again")
 
@@ -26,10 +26,11 @@ def f(time, V_out):
 
 
 # initial time, 100 mu sec is hard-coded
-time_s = np.linspace(0, 100, int(100/h))
+total_step = min(1000000, int(100/h))
+time_s = np.linspace(0, 100, total_step)
 # lists to hold all steps, total steps = time / time_step
 # this also fits initial condition, V_out(0) = 0
-V_out_s = np.zeros(int(100/h))
+V_out_s = np.zeros(total_step)
 # V_out_s = [0]
 
 # main Runge-Kutta loop untill time reached
@@ -48,5 +49,5 @@ for i, time_point in np.ndenumerate(time_s):
     if i+1 < len(V_out_s):
         V_out_s[i+1] = y_np1
 
-plt.scatter(time_s, V_out_s)
+plt.scatter(time_s[:int(len(time_s)*0.1)], V_out_s[:int(len(time_s)*0.1)], s=0.8)
 plt.show()

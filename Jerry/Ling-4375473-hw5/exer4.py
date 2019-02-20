@@ -10,18 +10,22 @@ import math
 
 def pulseDecode(integer):
     if int(integer) > 65535:
-        print("this is larger than 16 bits int, retry")
+        print("this is not an unsigned 16 bits int, retry")
         return 0
     # assume input is in integer not binary already
     # turn integer to bits string
-    allbits = format(int(integer), '#010b')[4:]
-    chanBits = int(allbits[0:3], 2)
-    timeBits = int(allbits[4:7], 2)
-    pulseHeightBits = int(allbits[8:15], 2)
+    allbits = bin(int(integer))[2:]
+    # fix length
+    leading_zeros = "0" * (16-len(allbits))
+    allbits = leading_zeros+allbits
+    # [a:b] includes a not b
+    chan= int(allbits[0:4], 2)
+    time= int(allbits[4:8], 2)
+    pulseHeight= int(allbits[8:16], 2)
 
     print("In %d channel, at time %d, pulse height is %d" %
-          (chanBits, timeBits, pulseHeightBits))
+          (chan, time, pulseHeight))
 
 
-number = int(input("give me a number within 16bits"))
+number = int(input("give me a number within 0-65535: "))
 pulseDecode(number)
