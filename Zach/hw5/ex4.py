@@ -13,7 +13,7 @@ while value<0 or value>65535:
 
 #Takes relevant parts of input
 value_binary=bin(value)[2:].zfill(16)
-
+print(value_binary)
 channel=int(value_binary[0:4], 2)
 time=int(value_binary[4:8], 2)
 pulse_height=int(value_binary[8:16], 2)
