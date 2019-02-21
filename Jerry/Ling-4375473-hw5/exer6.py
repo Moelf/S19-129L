@@ -49,5 +49,15 @@ for i, time_point in np.ndenumerate(time_s):
     if i+1 < len(V_out_s):
         V_out_s[i+1] = y_np1
 
-plt.scatter(time_s[:int(len(time_s)*0.1)], V_out_s[:int(len(time_s)*0.1)], s=0.8)
+plt.title("time from $0 \mu s$ to $10 \mu s$ ")
+plt.scatter(time_s[:int(len(time_s)*0.1)],
+            V_out_s[:int(len(time_s)*0.1)], s=0.8)
+plt.xlabel("time ($\mu s$)")
+plt.ylabel("$V_{out}$", rotation=2)
+plt.show()
+plt.title("time from $0 \mu s$ to $100 \mu s$ ")
+plt.xlabel("time ($\mu s$)")
+plt.ylabel("$V_{out}$", rotation=2)
+plt.scatter(time_s,
+            V_out_s, s=0.8)
 plt.show()
