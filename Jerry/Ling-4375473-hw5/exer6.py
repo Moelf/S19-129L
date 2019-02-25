@@ -55,9 +55,9 @@ plt.scatter(time_s[:int(len(time_s)*0.1)],
 plt.xlabel("time ($\mu s$)")
 plt.ylabel("$V_{out}$", rotation=2)
 plt.show()
-plt.title("time from $0 \mu s$ to $100 \mu s$ ")
+plt.title("time from $90 \mu s$ to $100 \mu s$ ")
 plt.xlabel("time ($\mu s$)")
 plt.ylabel("$V_{out}$", rotation=2)
-plt.scatter(time_s,
-            V_out_s, s=0.8)
+plt.scatter(time_s[int(len(time_s)*0.9):],
+            V_out_s[int(len(time_s)*0.9):], s=0.8)
 plt.show()
