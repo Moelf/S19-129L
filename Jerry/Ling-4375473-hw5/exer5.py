@@ -24,5 +24,5 @@ while np.abs(x1-x2) >= 0.000005:
 
 ans = (x2+x1)/2
 
-print("Solution for x*cos(x) - 0.5=0\
-has a solution x= %.4f" % ans)
+print("Solution for x*cos(x) - 0.5 = 0\
+has a solution x = %.4f" % ans)

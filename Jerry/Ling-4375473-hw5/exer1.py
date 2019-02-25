@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 from scipy.special import ellipk
 
 # T0 cancels in the end so might as well just ignore
-
-
 def ratio_intgrand(alpha, beta):
     alpha = np.pi * alpha / 180  # convert to radiant
     k = np.sin(alpha/2)

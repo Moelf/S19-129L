@@ -4,7 +4,7 @@ import math
 fig, ax = plt.subplots()
 
 dx, dy = 0.005, 0.005
-nx, ny = 2,5
+nx, ny = 2,1
 kx, ky = math.pi, math.pi
 
 psi = lambda x,y: np.sin(nx*kx*x)*np.sin(ny*ky*y)

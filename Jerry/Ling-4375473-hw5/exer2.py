@@ -17,7 +17,7 @@ def nFinder(z, interation=0):
 
 
 def f(z):
-    c = complex(-0.79, 0.56)
+    c = complex(-0.79, 0.156)
     return z**2 + c
 
 
@@ -35,5 +35,5 @@ for xpix in range(0, xpix_range):
 pixMap = np.flipud(pixMap.transpose())  # correct the orientation
 
 picture = plt.imshow(pixMap, interpolation='none', cmap='terrain')
-plt.title("Julia set for $c = -0.79 + i0.56$")
+plt.title("Julia set for $c = -0.79 + i0.156$")
 plt.show()
