@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import ccHistStuff as cc
-
+import scipy.integrate
 # The function that multiplies the Gaussian
 def ff(x,y,N):
     return np.exp(-x-y) * (x+y)**N
@@ -15,6 +15,7 @@ def ff(x,y,N):
 N       = -1
 mu      = -1
 sigma   = -1
+cl      = .95 #Can change this if desired
 while N<0:
 	try:
 		N = float(input('Please pick a value for N: '))
@@ -52,11 +53,27 @@ for x in xar:
 	far[i] = (1./thisN) * ftoy.sum()
 	i      = i + 1
 
-# now the plot
+int_total=scipy.integrate.simps(far,xar)
+"""
+# normalized plot if desired
 fig, ax = plt.subplots()
-ax.plot(xar, far)
+ax.plot(xar, far/int_total)
 ax.set_xlim(x1,x2)
 ax.set_ylim(0)
 ax.grid(True, which='both')
 fig.show()
 input("Press <Enter> to Continue")
+"""
+
+#Calculating confidence
+integral=0
+int_total=sum(far)
+for i in range(len(far)):
+	if integral<cl:
+		val=far[i]/int_total
+		integral+=val
+		conf_value=np.mean([xar[i],xar[i-1]])
+	else:
+		break
+
+print('The 95%% CL limit is %.2f' %conf_value)
