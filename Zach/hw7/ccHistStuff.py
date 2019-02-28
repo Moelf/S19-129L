@@ -1,0 +1,47 @@
+#---------------------------------
+#
+# A bunch of functions to make
+# numpy histograms look better
+#
+#  CC 27 Jan 2019
+#  ZL 25 Feb 2019
+#---------------------------------
+import numpy as np
+import matplotlib.pyplot as plt
+from statistics import mean, stdev
+
+def statBox(ax, entries, binEdges, x=0.96, y=0.98, fontsize='medium',label=''):
+    """
+    Put a stat box on the histogram at coord x and y
+    font = medium is appropriate for 1x1.  Other choices are
+    size in points, 'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'
+    """
+    en = len(entries)                   # number of entries
+    ov = (entries>binEdges[-1]).sum()   # overflows
+    uf = (entries<binEdges[0]).sum()    # underflows
+    #mn = entries.mean()                 # mean
+    mn = mean(entries)
+    #sd = entries.std()                  # standard deviation
+    sd = stdev(entries)
+    textstr = '%s \nN=%i \nOverflow=%i \nUnderflow=%i \n$\mu=%.2f$ \n$\sigma=%.2f$' % (label, en, ov, uf, mn, sd)
+    props = dict(boxstyle='round', facecolor='white', alpha=0.5)
+    ax.text(x, y, textstr,
+            transform=ax.transAxes,
+            bbox=props,
+            fontsize=fontsize,
+            horizontalalignment='right',
+            verticalalignment='top'  )
+
+
+def plotErr(ax, y, binEdges, err=None, color='black'):
+    """
+    Add error bars on plot.  If err=None use sqrt(contents)
+    """
+    if err is None:
+        dy = np.sqrt(y)
+    else:
+        dy = err
+
+    binCenters = 0.5 * (binEdges[1:] + binEdges[:-1])
+    ax.errorbar(binCenters, y, yerr=dy, linestyle="none", color=color)
+

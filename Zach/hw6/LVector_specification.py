@@ -57,9 +57,11 @@ rtvector = a.get_rt()    # np.array with 3 components
 # The azimuthal angle in polar coordinates, ie, the angle between the
 # "rtvector" defined above and the x1-axis (between 0 and 2pi)
 phi = a.phi()
+
 # the polar angle, ie, the angle between the "rvector" defined above and
 # the x3 axis (between 0 and pi)
 theta = a.theta()
+
 # Pseudo-rapidity.  This is defined as -log( tan(theta/2) )
 eta = a.eta()
 
@@ -93,4 +95,5 @@ print(a)
 print(b)
 s2=a*b
 print(s1,s2)  # these better be the same!!!!
+
 
