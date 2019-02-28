@@ -1,3 +1,6 @@
+Using Python 3.5.3 and standard packages on the RPi
+Comes with LVector_specification.py provided by Campagnari
+
 Problem 1:
 -----------
 Constructed a 4-Vector class contained within LVector.py, with all the required methods described in LVector_specification.py. When running LVector_specification.py, all the methods function appropriately.
