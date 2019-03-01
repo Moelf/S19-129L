@@ -5,7 +5,7 @@ import math
 N = int(input("N = "))
 mu = int(input("mu = "))
 sigma = float(input("sigma = "))
-n = 5*10**4
+n = 10**3
 
 # list of S to scan
 Ss = np.linspace(0, max(13, N+np.sqrt(N)), 1200)
@@ -30,7 +30,7 @@ for tup in reversed(S_p_B):
         smallS = tup[1] if (tup[1] < smallS) else smallS
     else:
         n_tail += 1
-        if n_tail >= 80:
+        if n_tail >= 10:
             break
 
 
