@@ -20,6 +20,11 @@ compareLogNormal.py
    except that the "massaged" Lognormal can never go
    negative.
 
+dampedOscillator.py
+   Use or scipy.integrate.odeint to solve the equation for a
+   forced damped oscillator (2nd order linear differential
+   equation)
+
 dataSet.npy
     A dataset consisting of a 1D numpy array saved in numpy format.
     This is to be used for Exercise 1 in Homework Set 4.
@@ -50,10 +55,19 @@ genExponential.py
 genPoisson.py
    Example of generating and plotting a Poisson distribution
 
+histForMinuitFit.npz
+   Contains some data needed by maxLikFit.py
+
 LVector_specifications.py
    Exercise 1, Homework 6, asks for writing a Lorentz Vector class.
    This python file specifies the methods that are required (including
    their names)
+
+maxLikFit.py
+   Example of extended maximum likelihood fit with Minuit
+   Described in
+   http://hep.ucsb.edu/people/claudio/ph129-w19/ExtendedNLLExample.pdf
+   Needs to read data from histForMinuitFit.npz
 
 markovChain.py
    Example of how to generate random numbers using a Markov Chain.
@@ -71,6 +85,11 @@ myTriangle.py
 
 plotGaussian.py
    Plots of gaussian, error function, one sided p-value to N(sigma)
+
+RC.py
+   Solution of Homework 5 Exercise 6 using prepackaged
+   code scipy.integrate.odeint to solve an ordinary 1st order
+   differential equation
 
 straightTracks.txt
    A text file needed for Exercises 1 and 3 in Homework 7

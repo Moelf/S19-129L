@@ -4,6 +4,7 @@
 # numpy histograms look better
 #
 #  CC 27 Jan 2019
+#  Added marker style for error bar
 #---------------------------------
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,7 +30,7 @@ def statBox(ax, entries, binEdges, x=0.96, y=0.98, fontsize='medium'):
             verticalalignment='top'  )
 
 
-def plotErr(ax, y, binEdges, err=None, color='black'):
+def plotErr(ax, y, binEdges, err=None, color='black', marker=''):
     """
     Add error bars on plot.  If err=None use sqrt(contents)
     """
@@ -39,5 +40,6 @@ def plotErr(ax, y, binEdges, err=None, color='black'):
         dy = err
 
     binCenters = 0.5 * (binEdges[1:] + binEdges[:-1])
-    ax.errorbar(binCenters, y, yerr=dy, linestyle="none", color=color)
+    ax.errorbar(binCenters, y, yerr=dy, linestyle="none", color=color,
+                marker=marker)
 

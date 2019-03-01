@@ -18,15 +18,11 @@ z = z*scale
 z_min, z_max = -np.abs(z).max(), np.abs(z).max()
 
 CS = ax.contour(x, y, z)
-plt.pcolor(x, y, z, cmap='Blues', vmin=0, vmax=z_max)
 plt.xlabel("X")
 plt.ylabel("Y", rotation=0)
 plt.xticks([0, 1], ['0', 'L'])
 plt.yticks([0, 1], ['0', 'L'])
 plt.title('PDF of particle in a box with: $n_x=2$, $n_y = 5$')
 ax.clabel(CS, inline=True, fontsize=10)
-cbar = plt.colorbar()
-cbar.set_ticks([0, z_max])
-cbar.set_ticklabels(['0', 'large'])
 
 plt.show()

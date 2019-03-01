@@ -5,12 +5,16 @@
 #
 # 
 # CC 19 Feb 2019
+#
+# Added 1D chisquared scan
+# CC 21 Feb 2019
 #-----------------------
 import numpy as np
 import matplotlib.pyplot as plt
 from iminuit import Minuit
 
-# Minuit needs to define a function explicitely
+# Minuit needs to define a function to minimize
+# explicitely...it does not need to be a chisquared
 def myChi2(slope, offset):
     global x
     global y
@@ -25,10 +29,10 @@ dy = np.array([0.1, 0.07, 0.12])  # error in y
 
 # Initialize Minuit
 # It needs
-# - the name of the function that calculates the chisq
+# - the name of the function to minimize
 # - initial value
 # - print_level is for debug prints
-# - errordef=1 is for chisquared  fits (0.5 for log-likelihoods)
+# - errordef=1 is for chisquared-type  fits (0.5 for log-likelihoods)
 # - print_level=0 is "silent"  Set it to 1 etc for more output
 # - error_slope and error_offset are the "step sizes" for the initial
 #   search for a minimum
@@ -69,7 +73,8 @@ m.minos(var="offset")
 # Some output
 m.print_param()
 
-# And now contours of the fitted function (similar code to V2 version)
+# And now contours of the fitted function
+# (very similar to testFit_V2.py version)
 fittedSlope  = param[0]['value']
 fittedOffset = param[1]['value']
 fig2, ax2 = plt.subplots()
@@ -87,4 +92,33 @@ ax2.plot(fittedSlope, fittedOffset, 'ko')
 ax2.set_xlabel('slope')
 ax2.set_ylabel('offset')
 fig2.show()
+input('Enter something to continue ')
+
+
+# If we are particularly interested in one parameter
+# (say: the slope) we can scan the chisquared as a function
+# of "slope" minimizing wrt to the other parameter ("offset"
+# in this case) at each point.  This is similar information
+# as the previous contour but
+# (a) Contours can only be drawn for two parameters whereas
+#     this procedure can be done for as many parameters
+#     as you wish, ie, you fix one parameter and then minimize
+#     wrt all other parameters, and then you repeat by scanning
+#     the value of the fixed parameter
+# (b) The total 1 (2,3) sigma uncertainty for the scanned
+#     parameter is taken at the value of the scanned parameter
+#     where the chisquared increases by 1 (2^2=4, 3^2=9) from
+#     its value at the minimum.
+# For "well-behaved" problems (or in the limit of large statistics)
+# this scan will look parabolic.
+# This process is called "profiling"
+xxx, yyy, _ = m.mnprofile('slope', subtract_min=True, bins=100, bound=3)
+fig3, ax3 = plt.subplots()
+ax3.plot(xxx,yyy,linestyle='solid', color='b')
+ax3.set_ylim(0, 1.2*max(yyy))
+ax3.set_xlim(min(xxx), max(xxx))
+ax3.set_xlabel('slope')
+ax3.set_ylabel('deltaChiSquared')
+ax3.grid()
+fig3.show()
 input('Enter something to quit ')
