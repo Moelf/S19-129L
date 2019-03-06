@@ -15,6 +15,7 @@ Problem 3:
 -----------
 Run ex3.py
 Similar to problem 1, but fits the two tracks simultaneously and calculates the pull
-as well. Plots Xf-X0 and then the pull (Xf-X0)/Xf also.
+as well. Plots Xf-X0 and then the pull (Xf-X0)/Xf also. You may need to zoom in on the plot of the pull
+to see more useful data if desired.
 
 

@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import ccHistStuff as cc
 
-data=np.loadtxt("straightTracks.txt")
+data=10**4*np.loadtxt("straightTracks.txt")
 
-#Positions in cm
-x1 = 2 
-x2 = 3
-x3 = 5
-x4 = 7
+#Positions in micrometers
+x1 = 2*10**4
+x2 = 3*10**4
+x3 = 5*10**4
+x4 = 7*10**4
 difference0  = []
 difference1  = []
 differenceav = []
@@ -20,6 +20,7 @@ differenceav = []
 def func(x,a,b):
 	return a*x+b
 
+#Optimization to find intercepts
 for i in range(len(data)):
 	x0  = data[i][0]
 	y0  = data[i][1]
@@ -53,23 +54,23 @@ for i in range(len(data)):
 #Plotting
 fig, ax = plt.subplots()
 
-binEdges = np.linspace(-.05,.05,100)
+binEdges = np.linspace(-500,500,100)
 
 ax.hist([difference0,difference1],bins=binEdges,label=['X1-X0', 'X2-X0'])
 cc.statBox(ax, difference0, binEdges, x=.21, y=.98,label='Track 1')
 cc.statBox(ax, difference1, binEdges, x=.98, y=.98,label='Track 2')
 plt.legend(loc='center right')
-plt.xlabel('Intercept Difference [cm]')
+plt.xlabel('Intercept Difference [micrometers]')
 plt.ylabel('Number of Occurences')
 fig.show()
 input('Press <Enter> to continue')
 
 fig, ax = plt.subplots()
-binEdges = np.linspace(-.05,.05,100)
+binEdges = np.linspace(-500,500,100)
 ax.hist(differenceav,bins=binEdges,label='Xav-X0',edgecolor='black')
 cc.statBox(ax,differenceav,binEdges,label='Average of Tracks')
 plt.legend(loc='center right')
-plt.xlabel('Average Intercept Difference [cm]')
+plt.xlabel('Average Intercept Difference [micrometers]')
 plt.ylabel('Number of Occurences')
 fig.show()
 input('Press <Enter> to continue')
