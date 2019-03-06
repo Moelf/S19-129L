@@ -11,6 +11,9 @@ ccHistStuff.py
    Utilities for histogram plotting.  At the moment implemented
    a stat box and putting error bars on a histogram.
 
+checkDecayChain.py
+   Needed to check the output of Homework 8, Exercise 2
+
 colorPicture.py
   An example of making an 8 bit color pixel map
 
