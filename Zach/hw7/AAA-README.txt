@@ -2,7 +2,7 @@ Problem 1:
 -----------
 Run ex1.py
 Gives two histograms. The first one has both X1-X0 and X2-X0 on the same graph
-while the second has Xav-X0.
+while the second has Xav-X0. As expected, Xav seems to be a better estimate.
 
 Problem 2:
 -----------
@@ -17,5 +17,5 @@ Run ex3.py
 Similar to problem 1, but fits the two tracks simultaneously and calculates the pull
 as well. Plots Xf-X0 and then the pull (Xf-X0)/Xf also. You may need to zoom in on the plot of the pull
 to see more useful data if desired.
-Also includes code to plot chi-squared values, but is commented out so must be uncommented if you want that.
+Also includes code to plot chi-squared values, but is commented out so must be uncommented if you want that since the problem is unclear if that is required.
 
