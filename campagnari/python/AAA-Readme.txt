@@ -49,6 +49,15 @@ exampleOfCommandInput.py
     Example of passing parameters and options to a python program
     from the command line
 
+fft.ipynb
+    Jupyter notebook for Fast Fourier Transfer example.
+    On the rpi you start the jupyter notebook with the
+    command
+    linux> jupyter-notebook
+    On my MAC I sstart with
+    mac> jupyter notebook
+    (Don't ask me why?)
+
 exampleOfZip.py
    zip is a useful way of aggregating iterables in a loop
 
