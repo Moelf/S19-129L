@@ -16,7 +16,7 @@ x3 = 5*10**4
 x4 = 7*10**4
 difference  = []
 pull_values = []
-
+chi_squ     = []
 def func(x,a1,a2,b):
 	l = len(x)
 	val = np.hstack([ a2*x[:l] + b, a1*x[l:2*l] + b ])
@@ -34,14 +34,14 @@ for i in range(len(data)):
 	y12 = data[i][8]
 	y13 = data[i][9]
 
-	x_data  = [x0,x1, x2, x3, x4]
-	y0_data = [y0, y00, y01, y02, y03]
-	y1_data = [y0, y10, y11, y12, y13]
+	x_data  = np.array([x0,x1, x2, x3, x4])
+	y0_data = np.array([y0, y00, y01, y02, y03])
+	y1_data = np.array([y0, y10, y11, y12, y13])
 
-	x_data  = np.hstack([x_data,x_data])
-	y_data  = np.hstack([y0_data,y1_data])
+	x_data_stack  = np.hstack([x_data,x_data])
+	y_data_stack  = np.hstack([y0_data,y1_data])
 
-	popt, pcov = curve_fit(func,x_data,y_data, p0=[.5,-.5,x0 ],method='trf')
+	popt, pcov = curve_fit(func,x_data_stack,y_data_stack, p0=[.5,-.5,x0 ],method='trf')
 	intercept  = popt[2]
 	diff       = intercept - x0
 	difference.append(diff)
@@ -49,14 +49,13 @@ for i in range(len(data)):
 	pull = diff/np.diag(pcov)[2]
 	pull_values.append(pull)
 
-	#Chi-Squared Calculation
-	y0_theory = popt[0]*x_data + popt[2]
-	y1_theory = popt[1]*x_data + popt[2]
+	#Chi-Squared Calculation (if desired)
+	y0_theory = popt[0]*x_data[1:] + popt[2]
+	y1_theory = popt[1]*x_data[1:] + popt[2]
 	y_theory  = np.concatenate((y0_theory,y1_theory))
-	y_data    = np.concatenate((y0_data,y1_data))
-	chi       = chisquare(y_data, y_theory)
-	print(chi)
-	
+	y_data    = np.concatenate((y0_data[1:],y1_data[1:]))
+	chi       = chisquare(y_data, y_theory)[0]
+	chi_squ.append(chi)
 	
 #Plotting
 fig, ax = plt.subplots()
@@ -80,4 +79,15 @@ plt.xlabel('Pull')
 plt.ylabel('Number of Occurences')
 fig.show()
 input('Press <Enter> to continue')
+
+### Uncomment if you want to see plot of chi-squared values ###
+"""
+fig, ax = plt.subplots()
+binEdges = np.linspace(np.min(chi_squ),np.max(chi_squ),100)
+ax.hist(chi_squ, bins=binEdges, label='Chi Squared', edgecolor='black')
+cc.statBox(ax,chi_squ,binEdges,label='Chi Squared')
+fig.show()
+input('Press <Enter> to continue')
+"""
+
 
