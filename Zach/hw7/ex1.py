@@ -18,7 +18,7 @@ difference1  = []
 differenceav = []
 
 def func(x,a,b):
-	return a*x+b
+	return a*(x-b)
 
 #Optimization to find intercepts
 for i in range(len(data)):
@@ -33,9 +33,9 @@ for i in range(len(data)):
 	y12 = data[i][8]
 	y13 = data[i][9]
 
-	x_data  = [x0,x1, x2, x3, x4]
-	y0_data = [y0, y00, y01, y02, y03]
-	y1_data = [y0, y10, y11, y12, y13]
+	x_data  = [x1, x2, x3, x4]
+	y0_data = [y00, y01, y02, y03]
+	y1_data = [ y10, y11, y12, y13]
 
 
 	popt0, pcov0 = curve_fit(func,x_data,y0_data)
