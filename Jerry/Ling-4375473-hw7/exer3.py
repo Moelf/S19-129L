@@ -68,10 +68,10 @@ statBox(ax[0], histConst, binEdges, name="Constrain")
 ax[0].set_title("X0 - Xf with constrain")
 ax[0].set(xlabel="$\Delta$ X ($\mu m$)")
 # ax[1].hist(histPull, bins=binEdges, log=True, align="left")
-ax[1].hist(histPull, bins=binEdges, log=False, align="left")
+pullbinEdges = np.linspace(-5, 5, 100)
+ax[1].hist(histPull, bins=pullbinEdges, log=True, align="left")
 ax[1].set_title("Pull of constrained fit")
 ax[1].set(xlabel="$\Delta$ X ($\mu m$)")
-statBox(ax[1], histPull, binEdges, name="Pull of constrained fit")
 
 # ----------------un-comment and change line 7 to compare to average method ---
 # ax[2].hist(histXav, bins=binEdges, align="left")
