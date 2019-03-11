@@ -1,15 +1,20 @@
 import numpy as np
-import scipy
+from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from ccHistStuff import statBox
 
 
 fig, ax = plt.subplots(nrows=2)
-# import binary data set
+# import text data set
 # this has shape (1000,10)
 raw = np.array(np.loadtxt("./straightTracks.txt"))
 # x positions of pixel layer
 layer_x = np.array([2, 3, 5, 7], dtype=float)
+
+
+def line(x, a, b):
+    return (x-a)*b
+
 
 # set up array
 histX1X0 = np.empty(len(raw))
@@ -21,9 +26,10 @@ for i, data in enumerate(raw):
     ytrack2 = data[6:]
     X0 = data[0]
 
-    # [1] in fit is the constant term correspond to y-axis intersect
-    X1 = np.polyfit(layer_x, ytrack1, 1)[1]
-    X2 = np.polyfit(layer_x, ytrack2, 1)[1]
+    # ptop is the [a,b] parameter
+    ptop1, pcov1 = curve_fit(line, layer_x, ytrack1, method="trf")
+    ptop2, pcov2 = curve_fit(line, layer_x, ytrack2, method="trf")
+    X1, X2 = ptop1[0], ptop2[0]
     Xav = (X1+X2)/2 - X0
 
     histX1X0[i] = X1-X0
