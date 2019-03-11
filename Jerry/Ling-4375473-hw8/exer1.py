@@ -13,18 +13,19 @@ measured = np.loadtxt("./mass.txt")
 binEdges = np.linspace(100,200,25)
 
 
+# mass 155GeV, resolution in energy 5GeV
 def s_pdf(x):
-    return norm(155, 5).pdf(x)
+    return norm.pdf(x, 155, 5)
 
 # assume our falling background is a*exp(-b*mass)
 
 
-def b_pdf1(a, b, mass):
-    integration = a/b * (math.exp(-100*b) - math.exp(-200*b))
-    return a * math.exp(-b*mass) / integration
+def b_pdf1(b, mass):
+    integration = 1/b * (math.exp(-100*b) - math.exp(-200*b))
+    return math.exp(-b*mass) / integration
 
 
-def NLL(S, B, a, b):
+def NLL(S, B, b):
     global measured
     # alpha=0  ---> use b_pdf
     # alpha=1  ---> use b1_pdf
@@ -36,15 +37,14 @@ def NLL(S, B, a, b):
     # else:
     #     new_b_pdf = b_pdf - alpha*(b2_pdf-b_pdf)
     # should be already normalized, but make sure
-    temp = [math.log(S*s_pdf(mass) + B*new_b_pdf(a, b, mass))
+    temp = [math.log(S*s_pdf(mass) + B*new_b_pdf(b, mass))
             for mass in measured]
     nll = S+B - sum(temp)
     return nll
 
 
-m = Minuit(NLL, S=20., B=180., a=1., b=1., print_level=1,
-           errordef=0.5, error_S=1.0, error_B=1.0, error_a=0.1, error_b=0.1,
-           fix_a=(not shapeSyst))
+m = Minuit(NLL, S=20., B=180., b=1., print_level=1,
+           errordef=0.5, error_S=1.0, error_B=1.0, error_b=0.1)
 m.migrad()
 m.minos()
 
