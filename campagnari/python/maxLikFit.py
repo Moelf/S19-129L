@@ -134,43 +134,42 @@ xxx, yyy, _ = m.mnprofile('S', subtract_min=True, bins=100, bound=(0,60))
 # m.mnprofile does all the work... 
 # Now we just plot the results
 # deltaNLL = 0.5 (2, 4.5 ) corresponds to 1 (2, 3) sigma
-# fig3, ax3 = plt.subplots()
-# ax3.plot(xxx,yyy,linestyle='solid', color='b')
-# ax3.set_xlim(min(xxx), max(xxx))
-# ax3.set_ylim(0.)
-# ax3.set_xlabel('S')
-# ax3.set_ylabel('deltaNLL')
-# ax3.plot([min(xxx), max(xxx)], [0.5, 0.5], linestyle='dashed', color='red')
-# ax3.plot([min(xxx), max(xxx)], [2.0, 2.0], linestyle='dashed', color='red')
-# ax3.plot([min(xxx), max(xxx)], [4.5, 4.5], linestyle='dashed', color='red')
-# fig3.show()
-input('Enter something to quit')
+fig3, ax3 = plt.subplots()
+ax3.plot(xxx,yyy,linestyle='solid', color='b')
+ax3.set_xlim(min(xxx), max(xxx))
+ax3.set_ylim(0.)
+ax3.set_xlabel('S')
+ax3.set_ylabel('deltaNLL')
+ax3.plot([min(xxx), max(xxx)], [0.5, 0.5], linestyle='dashed', color='red')
+ax3.plot([min(xxx), max(xxx)], [2.0, 2.0], linestyle='dashed', color='red')
+ax3.plot([min(xxx), max(xxx)], [4.5, 4.5], linestyle='dashed', color='red')
+fig3.show()
 
-# # Show the data...first get fit parameters
-# fittedB = m.values['B']
-# fittedS = m.values['S']
-# fitteda = m.values['alpha']
-# if fitteda>0:
-#     bf_pdf = b_pdf + fitteda*(b1_pdf-b_pdf)
-# else:
-#     bf_pdf = b_pdf - fitteda*(b2_pdf-b_pdf)
-# bf_pdf = bf_pdf / bf_pdf.sum()
+# Show the data...first get fit parameters
+fittedB = m.values['B']
+fittedS = m.values['S']
+fitteda = m.values['alpha']
+if fitteda>0:
+    bf_pdf = b_pdf + fitteda*(b1_pdf-b_pdf)
+else:
+    bf_pdf = b_pdf - fitteda*(b2_pdf-b_pdf)
+bf_pdf = bf_pdf / bf_pdf.sum()
     
-# # Then plot stacked histograms of S and B
-# # lists with the data, colors, and labels of the two hist 
-# blah   = [binCen, binCen]
-# colors = ['blue', 'red']
-# names  = ['Background', 'Signal']
-# w2     = [fittedB*bf_pdf, fittedS*s_pdf]
+# Then plot stacked histograms of S and B
+# lists with the data, colors, and labels of the two hist 
+blah   = [binCen, binCen]
+colors = ['blue', 'red']
+names  = ['Background', 'Signal']
+w2     = [fittedB*bf_pdf, fittedS*s_pdf]
 
-# fig42, ax42 = plt.subplots()
-# ax42.hist(blah, binEdges, histtype='stepfilled', log=True,
-#           color=colors, stacked='True', label=names, weights=w2, alpha=0.4)
-# ax42.errorbar(binCen, d, yerr=np.sqrt(d), linestyle='none', marker='o', 
-#               color='black', markersize=4)
-# ax42.set_ylim(0.1)
-# ax42.set_xlim(binEdges[0], binEdges[-1])
-# ax42.legend()
-# ax42.set_ylabel("Number of events")
-# fig42.show()
-# input('Enter something to quit')
+fig42, ax42 = plt.subplots()
+ax42.hist(blah, binEdges, histtype='stepfilled', log=True,
+          color=colors, stacked='True', label=names, weights=w2, alpha=0.4)
+ax42.errorbar(binCen, d, yerr=np.sqrt(d), linestyle='none', marker='o', 
+              color='black', markersize=4)
+ax42.set_ylim(0.1)
+ax42.set_xlim(binEdges[0], binEdges[-1])
+ax42.legend()
+ax42.set_ylabel("Number of events")
+fig42.show()
+input('Enter something to quit')
