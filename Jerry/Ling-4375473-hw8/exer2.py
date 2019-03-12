@@ -1,6 +1,7 @@
 import pickle
-import numpy as np
 from math import pi
+import numpy as np
+import matplotlib.pyplot as plt
 from LVector import LVector as Lv
 
 # 1000 finals states of the following decay chain
@@ -44,7 +45,8 @@ def spheToCartesian(phi, theta):
 # calculate the first component of 4-vector E
 # https://en.wikipedia.org/wiki/Four-momentum#Derivation
 def EoverC(p, m):
-    return np.sqrt(np.dot(p, p) - m**2)
+    res = np.sqrt(np.dot(p, p) + m**2)
+    return res
 
 
 # momentum of either particle in a rest frame decay
@@ -55,16 +57,16 @@ def restDecayMomentum(M, m1, m2):
 # say, A is moving, then A->B+C
 # v1 is 3-velocity of A in lab frame, v2 is 3-velocity of B or C in A's frame
 def decayAngle(v1, v2):
-
+    denom = np.sqrt(np.dot(v1, v1) * np.dot(v2, v2))
+    return np.arccos(np.dot(v1, v2) / denom)
 
 
 def restSpinLessDecay(M, m1, m2):
     p = restDecayMomentum(M, m1, m2)
     theta1, phi1 = randomTheta(), randomPhi()
-    theta2, phi2 = randomTheta(), randomPhi()
     # 3-momentums
     p1 = p*spheToCartesian(phi1, theta1)
-    p2 = p*spheToCartesian(phi2, theta2)
+    p2 = -p1
 
     np.insert(p1, 0, EoverC(p1, m1))
     np.insert(p2, 0, EoverC(p2, m2))
@@ -76,16 +78,23 @@ def restSpinLessDecay(M, m1, m2):
 
 if __name__ == "__main__":
     output = []
+    heli = []
     for _ in range(1000):
         pDstar0, pPi_p1 = restSpinLessDecay(massB_p, massD_star0, massPi_p)
 
         pD0, pPi0 = restSpinLessDecay(massD_star0, massD_0, massPi_0)
+        pD0.boost(pDstar0.v[1:])
+        pPi0.boost(pDstar0.v[1:])
 
         pK_m, pPi_p2 = restSpinLessDecay(massD_0, massK_m, massPi_p)
+        pK_m.boost(pD0.v[1:])
+        pPi_p2.boost(pD0.v[1:])
 
         pGamma1, pGamma2 = restSpinLessDecay(massPi_0, 0, 0)
+        pGamma1.boost(pPi0.v[1:])
+        pGamma2.boost(pPi0.v[1:])
 
-        output.append([pPi_p1, pK, pPi_p2, pGamma1, pGamma2])
+        output.append([pPi_p1, pK_m, pPi_p2, pGamma1, pGamma2])
 
     with open('data.pik', 'wb') as File:
         pickle.dump(output, File)
