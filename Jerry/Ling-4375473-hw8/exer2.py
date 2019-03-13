@@ -49,9 +49,16 @@ def EoverC(p, m):
     return res
 
 
+# get a 3 velocity a 4-momentum, for boost
+def PtoV(p):
+    p3 = p[1:]
+    v = p3/float(p[0])
+    return v
+
+
 # momentum of either particle in a rest frame decay
 def restDecayMomentum(M, m1, m2):
-    return np.sqrt((M**2 - (m1+m2)**2) * (M**2 - (m1-m2)**2))
+    return np.sqrt((M**2 - (m1+m2)**2) * (M**2 - (m1-m2)**2))/(2*M)
 
 
 # say, A is moving, then A->B+C
@@ -68,12 +75,12 @@ def restSpinLessDecay(M, m1, m2):
     p1 = p*spheToCartesian(phi1, theta1)
     p2 = -p1
 
-    np.insert(p1, 0, EoverC(p1, m1))
-    np.insert(p2, 0, EoverC(p2, m2))
+    p1 = np.insert(p1, 0, EoverC(p1, m1))
+    p2 = np.insert(p2, 0, EoverC(p2, m2))
     # NOW 4-momentums
-    p1 = Lv(p1)
-    p2 = Lv(p2)
-    return p1, p2
+    lvp1 = Lv(p1)
+    lvp2 = Lv(p2)
+    return lvp1, lvp2
 
 
 if __name__ == "__main__":
@@ -82,17 +89,18 @@ if __name__ == "__main__":
     for _ in range(1000):
         pDstar0, pPi_p1 = restSpinLessDecay(massB_p, massD_star0, massPi_p)
 
+        # this is spin 1 decay
         pD0, pPi0 = restSpinLessDecay(massD_star0, massD_0, massPi_0)
-        pD0.boost(pDstar0.v[1:])
-        pPi0.boost(pDstar0.v[1:])
+        pD0.boost(PtoV(pDstar0.v))
+        pPi0.boost(PtoV(pDstar0.v))
 
         pK_m, pPi_p2 = restSpinLessDecay(massD_0, massK_m, massPi_p)
-        pK_m.boost(pD0.v[1:])
-        pPi_p2.boost(pD0.v[1:])
+        pK_m.boost(PtoV(pD0.v))
+        pPi_p2.boost(PtoV(pD0.v))
 
         pGamma1, pGamma2 = restSpinLessDecay(massPi_0, 0, 0)
-        pGamma1.boost(pPi0.v[1:])
-        pGamma2.boost(pPi0.v[1:])
+        pGamma1.boost(PtoV(pPi0.v))
+        pGamma2.boost(PtoV(pPi0.v))
 
         output.append([pPi_p1, pK_m, pPi_p2, pGamma1, pGamma2])
 
