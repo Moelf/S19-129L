@@ -52,9 +52,8 @@ def EoverC(p, m):
 
 # get a 3 velocity a 4-momentum, for boost
 def PtoV(p):
-    p3 = p.get_r()
-    v = p3/p.v[0]
-    return v
+    beta    = p.get_r()/p.get_x0()
+    return beta
 
 
 # momentum of either particle in a rest frame decay
@@ -116,14 +115,12 @@ if __name__ == "__main__":
     heli = []
     for _ in range(1000):
         pDstar0, pPi_p1 = restSpinLessDecay(massB_p, massD_star0, massPi_p)
-        thetaDstar0, phiDstar0 = pDstar0.theta(), pDstar0.phi()
         axis = np.cross(pDstar0.get_r(), [0, 0, 1])
-        angle = -np.arcsin(np.linalg.norm(axis)/pDstar0.get_rlength())
+        angle = -pDstar0.theta()
 
         # this is spin 1 decay
         pD0, pPi0 = restSpinDecay(massD_star0, massD_0, massPi_0)
         roteMatrix = pD0.rotate_by_axis(axis, angle)
-        print(pD0.v)
         pPi0.rotate_by_matrix(roteMatrix)
         pD0.boost(PtoV(pDstar0))
         pPi0.boost(PtoV(pDstar0))
