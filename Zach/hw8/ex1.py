@@ -17,7 +17,6 @@ x_values = np.linspace(100,200,500)
 m1 = 100.0
 m2 = 200.0
 
-
 mu_S    = 155.0
 sigma_S = 5.0
 
@@ -29,7 +28,7 @@ def B_pdf_0(x,alpha): #Test an exponential
 def B_pdf_1(x,m,b):   #Test linear
 	intgrl = (1/2)*(m2-m1)*(2*b+m*(m1+m2))
 	return (m*x + b)/intgrl
-def B_pdf_2(x,a,c): #Test interesting trig
+def B_pdf_2(x,a,c): #Test quadratic
 	intgrl = (1/3)*(-a*m1**3+a*m2**3-3*c*m1+3*c*m2)
 	return (a*x**2 + c)/intgrl
 
@@ -53,12 +52,18 @@ def NLL_2(S,B,a,c):
 # Fitting
 m_0 = Minuit(NLL_0, S=20., B=180.,alpha=.5, print_level=0, errordef=0.5, error_S=1.0, error_B=1.0,error_alpha=.1)
 fmin_0, param_0 = m_0.migrad()
+m_0.minos()###
+#m_0.print_param()
 
 m_1 = Minuit(NLL_1, S=20., B=180., m=-.5, b=20, print_level=0, errordef=0.5, error_S=1.0, error_B=1.0,error_m=.1, error_b=1)
 fmin_1, param_1 = m_1.migrad()
+m_1.minos()###
+#m_1.print_param()
 
 m_2 = Minuit(NLL_2, S=20., B=180., a=10, c=10, print_level=0, errordef=0.5, error_S=1.0, error_B=1.0,error_a=1,error_c=1)
 fmin_2, param_2 = m_2.migrad()
+m_2.minos()###
+#m_2.print_param()
 
 # Extracting fitted data
 S_0        = param_0[0]['value']
