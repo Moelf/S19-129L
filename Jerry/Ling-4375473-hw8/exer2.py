@@ -1,13 +1,10 @@
 import pickle
-import math
-from tqdm import tqdm
-from math import pi
-import numpy as np
-import matplotlib.pyplot as plt
-from LVector import LVector as Lv
+# read about the utility functions in ./ex2utils.py
+from ex2utils import *
 
+# A simulation to produce
 # 1000 finals states of the following decay chain
-# http://pdglive.lbl.gov/Viewer.action
+# with no displacement considered
 # http://pdg.lbl.gov/2017/reviews/rpp2017-rev-kinematics.pdf
 # ---------------------------------------------------------
 # B+ -> D*0 + pi+
@@ -19,126 +16,55 @@ from LVector import LVector as Lv
 # ---------------------------------------------------------
 
 # mass constants in GeV
-massB_p = 5.28
-massD_star0 = 2.01
-massD_0 = 1.86
-massK_m = 0.494
-massPi_p = 0.1396
-massPi_0 = 0.1350
+mB_p = 5.28
+mD_star0 = 2.01
+mD_0 = 1.86
+mK_m = 0.494
+mPi_p = 0.1396
+mPi_0 = 0.1350
 
 
-# http://mathworld.wolfram.com/SpherePointPicking.html
-def randomPhi():
-    return np.random.uniform(0, 2*pi)
+output = []
+# ----------------------------------------------------------------------------
+# 1. Make all decays in rest frame of parent particle, 3-momentums are trivial
+# 2. In spin = 1 case, rotate daughter 4-momentum in their parent's theta
+#    because decay(helicity) angle distribution was given in the rest frame of
+#    parent particle (weird to think about
+# 3. Boost each particle with its parent's beta, propagate till final state
+#    to obtain what we shall measure in LAB frame
+# 4. Profit
+# ----------------------------------------------------------------------------
 
+# for _ in tqdm(range(1000)):
+for _ in range(1000):
+    # B+ -> D*0 + pi+
+    # LAB frame, no boost needed
+    Dstar0, Pi_p1 = restDecay(mB_p, mD_star0, mPi_p, spin=0)
+    # rotation information about D_star0 particle for the daughters
+    axis = np.cross(Dstar0.get_r(), [0, 0, 1])
+    # rotate daughters back by theta, thus the negative
+    angle = Dstar0.theta()
 
-def randomTheta():
-    v = np.random.rand()
-    return np.arccos(2*v - 1)
+    # decay from spin 1, first rotate then boost back to LAB
+    # D*0 -> D0 + pi0
+    D0, Pi0 = restDecay(mD_star0, mD_0, mPi_0, spin=1)
+    # rotate daughters back by theta, thus the negative
+    roteMatrix = D0.rotate_by_axis(axis, -angle)
+    Pi0.rotate_by_matrix(roteMatrix)
+    D0.boost(PtoV(Dstar0))
+    Pi0.boost(PtoV(Dstar0))
 
+    # repeat
+    K_m, Pi_p2 = restDecay(mD_0, mK_m, mPi_p, spin=0)
+    K_m.boost(PtoV(D0))
+    Pi_p2.boost(PtoV(D0))
 
-def spheToCartesian(phi, theta):
-    x = np.sin(theta) * np.cos(phi)
-    y = np.sin(theta) * np.sin(phi)
-    z = np.cos(theta)
-    return np.array([x, y, z])
+    # repeat
+    Gamma1, Gamma2 = restDecay(mPi_0, 0, 0, spin=0)
+    Gamma1.boost(PtoV(Pi0))
+    Gamma2.boost(PtoV(Pi0))
 
+    output.append([Pi_p1, K_m, Pi_p2, Gamma1, Gamma2])
 
-# calculate the first component of 4-vector E
-# https://en.wikipedia.org/wiki/Four-momentum#Derivation
-def EoverC(p, m):
-    res = np.sqrt(np.dot(p, p) + m**2)
-    return res
-
-
-# get a 3 velocity a 4-momentum, for boost
-def PtoV(p):
-    beta = p.get_r()/p.get_x0()
-    return beta
-
-
-# momentum of either particle in a rest frame decay
-def restDecayMomentum(M, m1, m2):
-    return np.sqrt((M**2 - (m1+m2)**2) * (M**2 - (m1-m2)**2))/(2*M)
-
-
-# say, A is moving, then A->B+C
-# v1 is 3-velocity of A in lab frame, v2 is 3-velocity of B or C in A's frame
-def decayAngle(v1, v2):
-    denom = np.sqrt(np.dot(v1, v1) * np.dot(v2, v2))
-    return np.arccos(np.dot(v1, v2) / denom)
-
-
-# R = x^3 -> x = (R)1/3
-def SpinTheta():
-    R = np.random.rand()
-    costheta = ((R)**(1/3))
-    if np.random.rand() < 0.5:
-        costheta = -costheta
-    return np.arccos(costheta)
-
-
-a = [SpinTheta() for _ in range(1000)]
-plt.hist(a)
-plt.show()
-
-
-def restSpinLessDecay(M, m1, m2):
-    p = restDecayMomentum(M, m1, m2)
-    theta1, phi1 = randomTheta(), randomPhi()
-    # 3-momentums
-    p1 = p*spheToCartesian(phi1, theta1)
-    p2 = -p1
-
-    p1 = np.insert(p1, 0, EoverC(p1, m1))
-    p2 = np.insert(p2, 0, EoverC(p2, m2))
-    # NOW 4-momentums
-    lvp1 = Lv(p1)
-    lvp2 = Lv(p2)
-    return lvp1, lvp2
-
-
-def restSpinDecay(M, m1, m2):
-    p = restDecayMomentum(M, m1, m2)
-    # this account for the Wigner angle but in it's rest frame
-    theta1 = SpinTheta()
-    phi1 = randomPhi()
-    # 3-momentums
-    p1 = p*spheToCartesian(phi1, theta1)
-    p2 = -p1
-
-    p1 = np.insert(p1, 0, EoverC(p1, m1))
-    p2 = np.insert(p2, 0, EoverC(p2, m2))
-    # NOW 4-momentums
-    lvp1 = Lv(p1)
-    lvp2 = Lv(p2)
-    return lvp1, lvp2
-
-
-if __name__ == "__main__":
-    output = []
-    heli = []
-    for _ in tqdm(range(1000)):
-        pDstar0, pPi_p1 = restSpinLessDecay(massB_p, massD_star0, massPi_p)
-        axis = np.cross(pDstar0.get_r(), [0, 0, 1])
-        angle = -pDstar0.theta()
-
-        # this is spin 1 decay
-        pD0, pPi0 = restSpinDecay(massD_star0, massD_0, massPi_0)
-        roteMatrix = pD0.rotate_by_axis(axis, angle)
-        pPi0.rotate_by_matrix(roteMatrix)
-        pD0.boost(PtoV(pDstar0))
-        pPi0.boost(PtoV(pDstar0))
-
-        pK_m, pPi_p2 = restSpinLessDecay(massD_0, massK_m, massPi_p)
-        pK_m.boost(PtoV(pD0))
-        pPi_p2.boost(PtoV(pD0))
-
-        pGamma1, pGamma2 = restSpinLessDecay(massPi_0, 0, 0)
-        pGamma1.boost(PtoV(pPi0))
-        pGamma2.boost(PtoV(pPi0))
-
-        output.append([pPi_p1, pK_m, pPi_p2, pGamma1, pGamma2])
-
-    with open('data.pik', 'wb') as File:
-        pickle.dump(output, File)
+with open('data.pik', 'wb') as File:
+    pickle.dump(output, File)
