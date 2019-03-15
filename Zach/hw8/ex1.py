@@ -70,41 +70,46 @@ S_0        = param_0[0]['value']
 S_0_er     = param_0[0]['error']
 B_0        = param_0[1]['value']
 alpha      = param_0[2]['value']
-y_values_0 = 5*(S_0*S_pdf(x_values) + B_0*B_pdf_0(x_values,alpha) )
+y_values_0 = (S_0*S_pdf(x_values) + B_0*B_pdf_0(x_values,alpha) )
 
 S_1        = param_1[0]['value']
 S_1_er     = param_1[0]['error']
 B_1        = param_1[1]['value']
 m_1        = param_1[2]['value']
 b_1        = param_1[3]['value']
-y_values_1 = 5*(S_1*S_pdf(x_values) + B_1*B_pdf_1(x_values,m_1,b_1) )
+y_values_1 = (S_1*S_pdf(x_values) + B_1*B_pdf_1(x_values,m_1,b_1) )
 
 S_2        = param_2[0]['value']
 S_2_er     = param_2[0]['error']
 B_2        = param_2[1]['value']
 a_2        = param_2[2]['value']
 c_2        = param_2[3]['value']
-y_values_2 = 5*(S_2*S_pdf(x_values) + B_2*B_pdf_2(x_values,a_2,c_2) )
+y_values_2 = (S_2*S_pdf(x_values) + B_2*B_pdf_2(x_values,a_2,c_2) )
 
 # Plotting
 nb = 20
 bins = np.linspace(m1, m2, nb+1)
+val, hist = np.histogram(data, bins)
+area = sum(np.diff(hist)*val)
+scale = area/len(data) # = 5.0
+
 fig, ax = plt.subplots()
-ax.plot(x_values,y_values_0)
+#ax.plot(x_values,y_values_0)
 ax.hist(data, bins, histtype='step')
+ax.plot(x_values, scale*y_values_0)
 plt.title('Exponential Background with S=%.1f $\pm$ %.1f' %(S_0,S_0_er) )
 fig.show()
 input("Press <Enter> to continue")
 
 fig, ax = plt.subplots()
-ax.plot(x_values,y_values_1)
+ax.plot(x_values,scale*y_values_1)
 ax.hist(data, bins, histtype='step')
 plt.title('Linear Background with S=%.1f $\pm$ %.1f' %(S_1,S_1_er) )
 fig.show()
 input("Press <Enter> to continue")
 
 fig, ax = plt.subplots()
-ax.plot(x_values,y_values_2)
+ax.plot(x_values,scale*y_values_2)
 ax.hist(data, bins, histtype='step')
 plt.title('Quadratic Background with S=%.1f $\pm$ %.1f' %(S_2,S_2_er) )
 fig.show()
