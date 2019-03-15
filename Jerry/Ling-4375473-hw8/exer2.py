@@ -1,5 +1,6 @@
 import pickle
 import math
+from tqdm import tqdm
 from math import pi
 import numpy as np
 import matplotlib.pyplot as plt
@@ -52,7 +53,7 @@ def EoverC(p, m):
 
 # get a 3 velocity a 4-momentum, for boost
 def PtoV(p):
-    beta    = p.get_r()/p.get_x0()
+    beta = p.get_r()/p.get_x0()
     return beta
 
 
@@ -71,11 +72,15 @@ def decayAngle(v1, v2):
 # R = x^3 -> x = (R)1/3
 def SpinTheta():
     R = np.random.rand()
-    theta = np.arccos((R)**(1/3))
+    costheta = ((R)**(1/3))
     if np.random.rand() < 0.5:
-        return -theta + pi/2
-    else:
-        return theta + pi/2
+        costheta = -costheta
+    return np.arccos(costheta)
+
+
+a = [SpinTheta() for _ in range(1000)]
+plt.hist(a)
+plt.show()
 
 
 def restSpinLessDecay(M, m1, m2):
@@ -113,7 +118,7 @@ def restSpinDecay(M, m1, m2):
 if __name__ == "__main__":
     output = []
     heli = []
-    for _ in range(1000):
+    for _ in tqdm(range(1000)):
         pDstar0, pPi_p1 = restSpinLessDecay(massB_p, massD_star0, massPi_p)
         axis = np.cross(pDstar0.get_r(), [0, 0, 1])
         angle = -pDstar0.theta()
