@@ -7,4 +7,4 @@ I've also included a PDF with more data nicely displayed in a semi-report format
 
 Problem 2:
 -----------
-Run ex2.py. It will write to the data.pik file, which may be read by checkDecayChain.py and results in proper consistencies and plots.
+Run ex2.py. Simulates a nuclear decay chain 1000 times and wrotes results to the data.pik file, which may be read by checkDecayChain.py and results in proper consistencies and plots.
