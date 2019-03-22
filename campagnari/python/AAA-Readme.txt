@@ -28,6 +28,9 @@ dampedOscillator.py
    forced damped oscillator (2nd order linear differential
    equation)
 
+data_fourtop.pkl  data_fourtop.csv
+   A pickle or csv file needed for Homework 9
+
 dataSet.npy
     A dataset consisting of a 1D numpy array saved in numpy format.
     This is to be used for Exercise 1 in Homework Set 4.
