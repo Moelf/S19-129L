@@ -2,3 +2,4 @@
 *.pyc
 *.pik
 /play/*
+*.ipynb_checkpoints/*
